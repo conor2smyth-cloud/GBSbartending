@@ -37,9 +37,32 @@
   </header>
 
   <div class="section">
-    <h1>Welcome to GBS Bartending</h1>
-    <p>Your destination for expertly crafted drinks and good times. Choose a section above to explore the bar.</p>
+    <h1>Joe and Ursula's Wedding Party</h1>
+    <p><a href="#" style="color:#d4af37;">Open Spotify Jam Playlist</a></p>
+    <div class="upload-zone" id="dropzone">Click or drop photos here to upload</div>
+    <div class="thumbs" id="thumbs"></div>
   </div>
+  <script>
+    const drop = document.getElementById('dropzone');
+    const thumbs = document.getElementById('thumbs');
+    drop.addEventListener('click', ()=>{
+      const input=document.createElement('input');
+      input.type='file';input.accept='image/*';input.multiple=true;
+      input.onchange=e=>handleFiles(e.target.files);
+      input.click();
+    });
+    drop.addEventListener('dragover', e=>{e.preventDefault();drop.style.borderColor='#d4af37';});
+    drop.addEventListener('dragleave', ()=>drop.style.borderColor='#555');
+    drop.addEventListener('drop', e=>{e.preventDefault();drop.style.borderColor='#555';handleFiles(e.dataTransfer.files);});
+    function handleFiles(files){
+      [...files].forEach(file=>{
+        if(!file.type.startsWith('image/')) return;
+        const img=document.createElement('img');
+        img.src=URL.createObjectURL(file);
+        thumbs.appendChild(img);
+      });
+    }
+  </script>
 
 </body>
 </html>
